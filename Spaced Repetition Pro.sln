@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spaced Repetition Pro", "Spaced Repetition Pro\Spaced Repetition Pro.csproj", "{18F28D9E-574C-4F20-8340-534166657145}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Spaced Repetition Pro Setup", "Spaced Repetition Pro Setup\Spaced Repetition Pro Setup.vdproj", "{A348E48D-6BFE-410D-A435-A04E7D1A80E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{18F28D9E-574C-4F20-8340-534166657145}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18F28D9E-574C-4F20-8340-534166657145}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18F28D9E-574C-4F20-8340-534166657145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A348E48D-6BFE-410D-A435-A04E7D1A80E2}.Debug|Any CPU.ActiveCfg = Debug
+		{A348E48D-6BFE-410D-A435-A04E7D1A80E2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
