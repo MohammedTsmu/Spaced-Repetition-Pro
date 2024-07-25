@@ -40,9 +40,13 @@ namespace SpacedRepetitionApp
 
                 if (subject.IsSubjectDueForReview())
                     return "🕒"; // أو يمكنك استخدام أيقونة أفضل
-            }
 
-            return string.Empty;
+                if (subject.IsSubjectNew())
+                    return "🆕"; // أو يمكنك استخدام أيقونة أفضل
+            }
+            
+            return "💤"; // أو يمكنك استخدام أيقونة أفضل
+            /*return string.Empty;*/
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -62,9 +66,13 @@ namespace SpacedRepetitionApp
 
                 if (subject.IsSubjectDueForReview())
                     return "This subject is due for review.";
+
+                if (subject.IsSubjectNew())
+                    return "Just get started ";
             }
 
-            return string.Empty;
+            /*return string.Empty;*/
+            return "Have Break.";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

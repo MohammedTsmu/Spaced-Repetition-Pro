@@ -1,44 +1,44 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionApp
 {
-    public class Database
+    public static class Database
     {
-        private static readonly string databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SpacedRepetitionApp", "data.json");
+        private static readonly string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "subjects.json");
 
         public static async Task Initialize()
         {
-            if (!File.Exists(databasePath))
+            if (!File.Exists(filePath))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(databasePath));
-                var initialData = new List<Subject>();
-                await Task.Run(() => File.WriteAllText(databasePath, JsonConvert.SerializeObject(initialData)));
+                using (File.Create(filePath))
+                {
+                    // Ensure the file is created
+                }
+                await Task.Run(() => File.WriteAllText(filePath, "[]"));
             }
         }
 
         public static async Task<List<Subject>> GetSubjectsAsync()
         {
-            return await Task.Run(() =>
-            {
-                var json = File.ReadAllText(databasePath);
-                return JsonConvert.DeserializeObject<List<Subject>>(json);
-            });
+            var json = await Task.Run(() => File.ReadAllText(filePath));
+            return JsonSerializer.Deserialize<List<Subject>>(json);
         }
 
-        public static async Task<Subject> GetSubjectAsync(int id)
+        public static async Task<Subject> GetSubjectByIdAsync(int id)
         {
             var subjects = await GetSubjectsAsync();
-            return subjects.Find(s => s.Id == id);
+            return subjects.FirstOrDefault(s => s.Id == id);
         }
 
         public static async Task SaveSubjectAsync(Subject subject)
         {
             var subjects = await GetSubjectsAsync();
-            var existingSubject = subjects.Find(s => s.Id == subject.Id);
+            var existingSubject = subjects.FirstOrDefault(s => s.Id == subject.Id);
 
             if (existingSubject != null)
             {
@@ -46,18 +46,19 @@ namespace SpacedRepetitionApp
             }
 
             subjects.Add(subject);
-            await Task.Run(() => File.WriteAllText(databasePath, JsonConvert.SerializeObject(subjects)));
+            var json = JsonSerializer.Serialize(subjects);
+            await Task.Run(() => File.WriteAllText(filePath, json));
         }
 
         public static async Task DeleteSubjectAsync(int id)
         {
             var subjects = await GetSubjectsAsync();
-            var subjectToRemove = subjects.Find(s => s.Id == id);
-
+            var subjectToRemove = subjects.FirstOrDefault(s => s.Id == id);
             if (subjectToRemove != null)
             {
                 subjects.Remove(subjectToRemove);
-                await Task.Run(() => File.WriteAllText(databasePath, JsonConvert.SerializeObject(subjects)));
+                var json = JsonSerializer.Serialize(subjects);
+                await Task.Run(() => File.WriteAllText(filePath, json));
             }
         }
     }

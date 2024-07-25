@@ -7,6 +7,26 @@
         <local:StatusToBackgroundConverter x:Key="StatusToBackgroundConverter"/>
         <local:StatusToIconConverter x:Key="StatusToIconConverter"/>
         <local:StatusToTooltipConverter x:Key="StatusToTooltipConverter"/>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -14,12 +34,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBox x:Name="SubjectNameTextBox" Width="200" Margin="5" Tag="Subject Name" Foreground="Gray" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
-            <TextBox x:Name="DescriptionTextBox" Width="200" Margin="5" Tag="Description" Foreground="Gray" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
-            <TextBox x:Name="TagTextBox" Width="200" Margin="5" Tag="Tag" Foreground="Gray" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
-            <Button Content="Add Subject" Click="AddSubjectButton_Click" Width="100" Margin="5"/>
+            <TextBox x:Name="SubjectNameTextBox" Tag="Subject Name" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
+            <TextBox x:Name="DescriptionTextBox" Tag="Description" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
+            <TextBox x:Name="TagTextBox" Tag="Tag" GotFocus="RemovePlaceholder" LostFocus="AddPlaceholder"/>
+            <Button x:Name="AddSubjectButton" Content="Add Subject" Click="AddSubjectButton_Click"/>
         </StackPanel>
-        <ListView x:Name="SubjectsListView" Grid.Row="1" Margin="10">
+        <ListView x:Name="SubjectsListView" Grid.Row="1" Margin="10" MouseRightButtonDown="SubjectsListView_MouseRightButtonDown">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

@@ -42,6 +42,11 @@ namespace SpacedRepetitionApp
             return false;
         }
 
+        public bool IsSubjectNew()
+        {
+            return CreatedDate.Date == DateTime.Today;
+        }
+
         public bool IsReviewComplete()
         {
             var lastReviewDate = CreatedDate.AddDays(10);
