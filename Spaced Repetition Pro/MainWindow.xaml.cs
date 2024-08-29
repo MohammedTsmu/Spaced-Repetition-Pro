@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Media;
 
 namespace SpacedRepetitionApp
 {
@@ -19,6 +21,7 @@ namespace SpacedRepetitionApp
             AddPlaceholder(SubjectNameTextBox, null);
             AddPlaceholder(DescriptionTextBox, null);
             AddPlaceholder(TagTextBox, null);
+            PlayNotificationSoundIfNeeded();
         }
 
         private async void LoadSubjects()
@@ -77,6 +80,15 @@ namespace SpacedRepetitionApp
             {
                 textBox.Text = (string)textBox.Tag;
                 textBox.Foreground = System.Windows.Media.Brushes.Gray;
+            }
+        }
+
+        private void PlayNotificationSoundIfNeeded()
+        {
+            var subjects = SubjectsListView.Items.Cast<Subject>();
+            if (subjects.Any(subject => subject.IsOverdue() || subject.IsSubjectDueForReview()))
+            {
+                SystemSounds.Exclamation.Play();
             }
         }
     }

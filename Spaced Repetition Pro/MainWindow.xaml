@@ -5,6 +5,8 @@
         Title="Spaced Repetition App" Height="450" Width="800">
     <Window.Resources>
         <local:StatusToBackgroundConverter x:Key="StatusToBackgroundConverter"/>
+        <local:StatusToIconConverter x:Key="StatusToIconConverter"/>
+        <local:StatusToTooltipConverter x:Key="StatusToTooltipConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -22,10 +24,18 @@
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Background" Value="{Binding ., Converter={StaticResource StatusToBackgroundConverter}}"/>
+                    <Setter Property="ToolTip" Value="{Binding ., Converter={StaticResource StatusToTooltipConverter}}"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Status" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., Converter={StaticResource StatusToIconConverter}}" FontSize="16"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="120"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="200"/>
                     <GridViewColumn Header="Tag" DisplayMemberBinding="{Binding Tag}" Width="100"/>
